@@ -55,12 +55,16 @@ app.use(session({
 //Désactive la mise en cache du navigateur
 app.use(nocache());
 
+/**************************************************************************/
+
 // A ACTIVER QUAND TOUTES LES ROUTES ET MODELS SERONT FAITS !! 
 
 // app.use('/api/auth', userRoutes);
 // app.use('/api/auth', postRoutes);
 // app.use('/api/auth', commentRoutes);
 // app.use('/api/auth', likeRoutes);
+
+/**************************************************************************/
 
 
 //exportation de app.js
