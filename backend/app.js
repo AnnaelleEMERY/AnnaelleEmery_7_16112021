@@ -12,7 +12,7 @@ const path = require('path');
 require('dotenv').config()
 const DB = process.env;
 
-require("./database/dbConnexion");
+require("./database/dbConnection");
 
 // activer express
 const app = express();
@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 // Transforme les données arrivant de la requête POST en un objet JSON facilement exploitable
+// Remplaçant de bodyParser
 app.use(express.json());
 
 // Middleware qui permet de parser les requêtes envoyées par le client, on peut y accéder grâce à req.body
@@ -53,6 +54,14 @@ app.use(session({
 
 //Désactive la mise en cache du navigateur
 app.use(nocache());
+
+// A ACTIVER QUAND TOUTES LES ROUTES ET MODELS SERONT FAITS !! 
+
+// app.use('/api/auth', userRoutes);
+// app.use('/api/auth', postRoutes);
+// app.use('/api/auth', commentRoutes);
+// app.use('/api/auth', likeRoutes);
+
 
 //exportation de app.js
 module.exports = app;
