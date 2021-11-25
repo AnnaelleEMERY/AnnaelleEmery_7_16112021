@@ -6,15 +6,17 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const User = require('../models/user');
 
 // Création d'un nouvel utilisateur OK
-exports.register = (req, res) => {
+exports.signin = (req, res) => {
     bcrypt.hash(req.body.password, 5)
         .then(hash => {
             const user = new User({
                 pseudo: req.body.pseudo,
+                nom: req.body.nom,
+                prenom: req.body.prenom,
                 email: req.body.email,
                 photo: req.body.photo,
                 password: hash,
-                service: req.body.service,
+                etablissement: req.body.etablissement,
                 isAdmin: req.body.isAdmin
             })
             User.create(user, (err, data) => {
@@ -61,22 +63,12 @@ exports.login = (req, res) => {
     });
 };
 
-// Vérification de token au login
-exports.getMyDatas = (req, res) => {
-    let token = req.headers.authorization.split(' ')[1];
-    let decodedToken = jwt.verify(token, SECRET_KEY);
-    let id = JSON.parse(decodedToken.id);
-    User.findById(id)
-        .then(user => res.status(200).json(user))
-        .catch(error => res.status(404).json({ error }));
-
-}
 
 // Déconnection de l'utilisateur
 exports.logout = (req, res) => {
     console.log(req.body);
     res.status(200).json({
-        message: 'ok'
+        message: 'A la revoyure !'
     });
 }
 
