@@ -5,6 +5,6 @@ const likeCtrl = require('../controllers/likes');
 const auth = require('../middleware/auth');
 
 // Ajout d'un like à un post
-router.post('/:postId/likeDislike', auth, likeCtrl.addLikeOrDislike);
+router.post('/:postId/likeDislike', auth, likeCtrl.addLikeDislike);
 
 module.exports = router;

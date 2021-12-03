@@ -79,4 +79,4 @@ LikeDislike.findByPostId = (postId) => {
     })
 };
 
-module.exports = LikeDislikes;
+module.exports = LikeDislike;

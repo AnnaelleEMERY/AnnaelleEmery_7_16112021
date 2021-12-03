@@ -74,9 +74,9 @@ Post.findAll = (result) => {
 };
 
 // Chercher tous les posts par date de création 
-Post.findAllByCreatedate = (result) => {
+Post.findAllByCreatedAt = (result) => {
     db.query(
-        "SELECT * FROM groupomania.posts", (err, res) => {
+        "SELECT * FROM groupomania.posts ORDER BY createdAt DESC", (err, res) => {
             if (err) {
                 result(err, null);
                 return;
@@ -105,7 +105,7 @@ Post.findAllByUpdatedDate = (result) => {
 Post.findOne = (postId) => {
     return new Promise((resolve, reject) => {
         db.query(
-            `SELECT p.id AS postId, p.user_id AS user_id, p.title AS title, p.body AS body, p.image AS image, p.createdDate AS createdDate, p.updatedDate AS updatedDate, SUM(l.likes) AS likeCount, SUM(l.dislikes) AS dislikeCount FROM groupomania.posts p, groupomania.likes l WHERE p.id=${postId} AND l.posts_id = p.id`,
+            `SELECT p.id AS postId, p.user_id AS user_id, p.title AS title, p.body AS body, p.image AS image, p.createdAt AS createdAt, p.updatedAt AS updatedAt, SUM(l.likes) AS likeCount, SUM(l.dislikes) AS dislikeCount FROM groupomania.posts p, groupomania.likes l WHERE p.id=${postId} AND l.posts_id = p.id`,
             function (error, result, fields) {
                 if (error) {
                     reject(error);
