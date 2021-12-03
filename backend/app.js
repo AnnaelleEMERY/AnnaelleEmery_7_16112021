@@ -1,9 +1,13 @@
 const express = require('express');
 const mysql = require('mysql'); // base de donnée
-const { Sequelize } = require('sequelize');
 const helmet = require('helmet'); //pour une meilleure sécurité des cookies
 const session = require('cookie-session');
 const nocache = require('nocache');
+
+const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
+const commentRoutes = require('./routes/comment');
+const likeRoutes = require('./routes/likes');
 
 // On donne accès au chemin de notre système de fichier
 const path = require('path');
@@ -59,10 +63,10 @@ app.use(nocache());
 
 // A ACTIVER QUAND TOUTES LES ROUTES ET MODELS SERONT FAITS !! 
 
-// app.use('/api/auth', userRoutes);
-// app.use('/api/auth', postRoutes);
-// app.use('/api/auth', commentRoutes);
-// app.use('/api/auth', likeRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/api/auth', postRoutes);
+app.use('/api/auth', commentRoutes);
+app.use('/api/auth', likeRoutes);
 
 /**************************************************************************/
 

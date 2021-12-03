@@ -63,6 +63,16 @@ exports.login = (req, res) => {
     });
 };
 
+// Vérification de toke au login
+exports.getMyDatas = (req, res) => {
+    let token = req.headers.authorization.split(' ')[1];
+    let decodedToken = jwt.verify(token, SECRET_KEY);
+    let id = JSON.parse(decodedToken.id);
+    User.findById(id)
+    .then(user => res.status(200)).json(user)
+    .catch(error => res.status(404).json({ error }));
+};
+
 
 // Déconnection de l'utilisateur
 exports.logout = (req, res) => {
