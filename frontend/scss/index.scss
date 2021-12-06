@@ -1,0 +1,93 @@
+@import "variables.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+header {
+    padding: 1rem 0rem;
+    border-bottom: 4px solid $secondary-color;
+
+    @include media-breakpoint-up(lg) {
+        padding: 0rem;
+    }
+}
+
+.div_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    margin: 0;
+    width: 100%;
+
+    i {
+        @include media-breakpoint-up(md) {
+            font-size: 2.6rem;
+        }
+    }
+}
+
+.header_login {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.groupomania-logo {
+    width: 6rem;
+
+    @include media-breakpoint-up(xs) {
+        width: 10rem;
+    }
+    @include media-breakpoint-up(sm) {
+        width: 15rem;
+    }
+    @include media-breakpoint-up(md) {
+        width: 22rem;
+    }
+
+    &__login {
+        @include media-breakpoint-up(sm) {
+            width: 15rem;
+        }
+        @include media-breakpoint-up(md) {
+            width: 22rem;
+        }
+    }
+}
+
+.username {
+    margin-right: 1rem;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 2.5rem 1rem;
+    border-top: 4px solid $secondary-color;
+
+    .conditions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @include media-breakpoint-up(sm) {
+            flex-direction: row;
+        }
+
+        .link-footer:first-child {
+            margin-bottom: 1rem;
+
+            @include media-breakpoint-up(sm) {
+                margin-bottom: 0;
+                margin-right: 5rem;
+            }
+        }
+    }
+}
