@@ -1,18 +1,42 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Bienvenue !</h1>
+    <div class="bg-tertiary-color post">
+      <div class="userPseudoPost">
+        <p class="userPseudoPost__photo">PHOTO</p>
+        <p class="text-secondary-color">Pseudo</p>
+      </div>
+      <textarea id="message" name="messagePost" placeholder="Entrez votre message ici ;)"></textarea>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// mettre les importations ici
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  name: "Home",
+  components: {},
+};
+</script>
+
+<style lang="scss">
+.post {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  .userPseudoPost {
+    display: flex;
+    flex-direction: row;
+    align-self: start;
+
+    &__photo {
+      margin-right: 1.5rem;
+    }
   }
 }
-</script>
+</style>
