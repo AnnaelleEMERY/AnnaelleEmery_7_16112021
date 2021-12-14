@@ -26,12 +26,13 @@ export default {
     },
 
     actions: {
-        async login ({dispatch}, credentials) {
+        async login ({ dispatch }, credentials) {
             let response = await axios.post('auth/login/', credentials)
+
             return dispatch('attempt', response.data.token)
         },
 
-        async attempt ({commit, state}, token) {
+        async attempt ({ commit, state }, token) {
             if(token) {
                 commit('SET_TOKEN', token)
             }
@@ -39,7 +40,7 @@ export default {
                 return
             }
             try {
-                let response = await axios.get(auth/me)
+                let response = await axios.get('auth/me')
                 commit('SET_USER', response.data)
             } catch (e) {
                 commit('SET_TOKEN', null)
@@ -47,7 +48,7 @@ export default {
             }
         },
 
-        logout ({commit}) {
+        logout ({ commit }) {
             return axios.post('auth/logout')
             .then(() => {
                 commit('SET_TOKEN', null)

@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const User = require('../models/user');
 
 // Création d'un nouvel utilisateur OK
-exports.signin = (req, res) => {
+exports.register = (req, res) => {
     bcrypt.hash(req.body.password, 5)
         .then(hash => {
             const user = new User({

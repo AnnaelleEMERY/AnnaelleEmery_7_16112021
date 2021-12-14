@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <principalHeader />
-    <router-view />
+    <Navigation />
     <footer class="bg-primary-color">
       <div class="conditions">
         <a class="link-footer" href="#">Mentions légales</a>
@@ -13,12 +12,12 @@
 
 <script>
 // @ is an alias to /src
-import principalHeader from "@/components/principalHeader.vue";
+import Navigation from "@/components/Navigation.vue";
 
 export default {
   name: "App",
   components: {
-    principalHeader,
+  Navigation,
   },
 };
 </script>

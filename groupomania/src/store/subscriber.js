@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from '../store'
 import axios from 'axios'
 
 store.subscribe((mutation) => {
@@ -8,7 +8,8 @@ store.subscribe((mutation) => {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${mutation.payload}`
                 localStorage.setItem('token', mutation.payload)
             } else {
-                axios.defaults.headers.common['Autorization'] = nulllocaStorage.removeItem('token')
+                axios.defaults.headers.common['Autorization'] = null
+                localStorage.removeItem('token')
             }
             break;
     }

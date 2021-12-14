@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { nextTick } from 'vue/types/umd'
 import store from '../store'
 import Home from '../views/Home.vue'
+import Login from '@/components/Login.vue'
+import Register from '@/components/Register.vue'
+
 
 Vue.use(VueRouter)
 
@@ -23,12 +25,12 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: Login
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: Register
   },
   {
     path: '/Profile',
@@ -36,7 +38,7 @@ const routes = [
     component: () => import('../views/Profile.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
-        return nextTick({
+        return next({
           name: 'Login'
         })
       }
@@ -85,7 +87,7 @@ const routes = [
 {
   path: '/UpdateProfile/:id',
   name: 'UpdateProfile',
-  component: () => import('../views/UpdateProfile.vue'),
+  component: () => import('../components/UpdateProfile.vue'),
   beforeEnter: (to, from, next) => {
     if (!store.getters['auth/authenticated']) {
       return next({
@@ -98,7 +100,7 @@ const routes = [
 {
   path: '/UpdateComment/:id',
   name: 'UpdateComment',
-  component: () => import('../views/UpdateComment.vue'),
+  component: () => import('../components/UpdateComment.vue'),
   beforeEnter: (to, from, next) => {
     if (!store.getters['auth/authenticated']) {
       return next({
@@ -111,7 +113,7 @@ const routes = [
 {
   path: '/UpdatePost/:id',
   name: 'UpdatePost',
-  component: () => import('../views/UpdatePost.vue'),
+  component: () => import('../components/UpdatePost.vue'),
   beforeEnter: (to, from, next) => {
     if (!store.getters['auth/authenticated']) {
       return next({
