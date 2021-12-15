@@ -1,31 +1,47 @@
 <template>
   <div id="post">
     <article class="post_detail">
+
+      <!-- Détails du post -->
       <div  class="card col-8 text-center">
         <h4 class="card-title">{{ post.title }}</h4>
         <img class="card-img" v-bind:src="post.image || 'https://picsum.photos/300/200?random'" alt="image" />
         <p class="card-body">{{ post.body }}</p>
+
+        <!-- Créé le ... -->
         <p class="card-date">Créé le : {{ post.createdAt | moment('calendar') }}</p>
         <p v-if="post.createdAt !== post.updatedAt" class="card-date">Modifié le : {{ post.updatedAt | moment('calendar') }}</p>
         <div class="like-dislike">
+
+          <!-- Likes -->
           <div class="like">
             <b-icon-hand-thumbs-up v-on:click="like()" class="icone"/>
             <p class="like-count">{{ post.likeCount }}</p>
           </div>
+
+          <!-- Dislikes -->
           <button v-on:click="cancelVote()" class="btn btn-danger text-warning">Annuler Vote</button>
           <div class="dislike">
             <b-icon-hand-thumbs-down v-on:click="disLike()" class="icone"/>
             <p class="dislike-count">{{ post.dislikeCount }}</p>
           </div>
         </div>
+
+        <!-- Editer -->
         <div v-if="post.user_id === user[0].id || user[0].isAdmin === 1" class="boutons">
           <button class="modify" v-on:click="showUpdatePost = true"><b-icon-pencil class="icone1"/>Editer...</button>
+          
+          
           <div class="modal-overlay" v-if="showUpdatePost">
             <button class="close btn btn-danger text-light" @click="showUpdatePost = false">X</button>
             <UpdatePost v-if="showUpdatePost" />
           </div>
+          
+          <!-- Supprimer le post -->
           <button v-on:click.prevent="deletePost()" class="deletePost" title="Effacer votre message"><b-icon-trash class="icone2"/>Effacer...</button>
         </div>
+
+        <!-- Ajouter un commentaire -->
         <section class="create_comment">
           <h2 class="title">Votre commentaire :</h2>
           <div class="comment_corpse">
@@ -33,12 +49,14 @@
             <button v-on:click.prevent="postComment()" class="comment-btn" type="submit">Go !</button>
           </div>
         </section>
+
+        <!-- Montrer les commentaires -->
         <section class="display_comments">
           <div :key="index" v-for="(comment, index) in comments" class="commentaire">
             <p class="body">{{ comment.body }}</p>
             <p class="date">{{ comment.createdAt | moment('calendar') }}</p>
             <p v-if="comment.createdAt !== comment.updatedAt" class="date">Modifié le : {{ comment.updatedAt | moment('calendar') }}</p>
-            <button v-on:click="showUpdateComment = true" v-if="comment.users_id === user[0].id || user[0].isAdmin === 1"><b-icon-pencil class="icone"/>Modifier commentaire</button>
+            <button v-on:click="showUpdateComment = true" v-if="comment.users_id === user[0].id || user[0].isAdmin === 1"><b-icon-pencil class="icone"/>Modifier le commentaire</button>
             <div class="modal-overlay" v-if="showUpdateComment">
               <button class="close btn btn-danger text-light" @click="showUpdateComment = false">X</button>
               <UpdateComment v-if="showUpdateComment" />
@@ -131,7 +149,7 @@ export default {
     },
     async deletePost() {
       if (
-        confirm("Etes-vous sûr de vouloir supprimer ce post ?")&&
+        confirm("Etes-vous sûr et certain de vouloir supprimer ce post ?")&&
         confirm("C'est définif, sûr ?")
       ) {
       await axios.delete(`auth/post/delete/${this.id}`)
@@ -144,7 +162,7 @@ export default {
           })
         })
         .catch(error => {
-          this.data = alert("erreur, pas d'effacement !")
+          this.data = alert("erreur, pas de suppression !")
           console.log(error);
         })
       }
@@ -159,7 +177,7 @@ export default {
         .then(response => {
           let data = response.data;
           console.log(data);
-          this.data = alert("le Like a bien été envoyé !");
+          this.data = alert("Votre Like a bien été envoyé !");
         })
         .catch(error => {
           this.data = alert("erreur, fausse route !");
@@ -176,7 +194,7 @@ export default {
         .then(response => {
           let data = response.data;
           console.log(data);
-          this.data = alert("le Dislike a bien été envoyé !");
+          this.data = alert("Votre Dislike a bien été envoyé !");
         })
         .catch(error => {
           this.data = alert("erreur, fausse route !");
@@ -193,7 +211,7 @@ export default {
         .then(response => {
           let data = response.data;
           console.log(data);
-          this.data = alert("l'annulation a bien été envoyé !");
+          this.data = alert("l'annulation acceptée !");
         })
         .catch(error => {
           this.data = alert("erreur, fausse route !");
@@ -205,8 +223,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$primary-color: #091f43;
+$secondary-color: #d1515a;
+$tertiary-color: #d8d8d8;
+$white-color: #ffffff;
+$text-color: #131e2a;
+
 #post {
-  background-color: gold;;
+  background-color: $tertiary-color;
   width: 100%;
   margin-top: 130px;
   .post_detail {
@@ -215,15 +239,15 @@ export default {
       margin: 1px auto;
       border-style: none;
       border-radius: 30px;
-      box-shadow: 0 10px green;;
+      box-shadow: 0 10px $secondary-color;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: grey;
+      background-color: $tertiary-color;
       padding:5px;
       .card-title {
         font-size: 1em;
-        color: gold;
+        color: $tertiary-color;
         @media screen and (min-width: 768px) {
           font-size: 1.5em;
         }
@@ -234,7 +258,7 @@ export default {
       }
       .card-body {
         font-size: 0.8em;
-        color: gold;
+        color: $tertiary-color;
         word-wrap: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -244,7 +268,7 @@ export default {
       }
       .card-date {
         font-size: 0.8em;
-        color: darkgreen;
+        color: $text-color;
         @media screen and (min-width: 768px) {
           font-size: 1.5em;
         }
@@ -253,8 +277,7 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        background-color:greenyellow;
-        color: gold;
+        color: $tertiary-color;
         padding: 0;
         border-radius: 20px;
         width: 90%;
@@ -266,34 +289,34 @@ export default {
           justify-content: space-around;
           align-items: center;
           .icone {
-            color: green;
+            color: $primary-color;
             display: block;
             position: relative;
             margin-left: 30px;
             margin-right: 10px;
             cursor: pointer;
             font-size: 2em;
-            text-shadow: 2px 2px 5px grey;
+            text-shadow: 2px 2px 5px $tertiary-color;
           }
           .icone:hover {
             top: 2px;
-            text-shadow: 2px 2px 3px grey;
-            color: #3cc50e;
+            text-shadow: 2px 2px 3px $tertiary-color;
+            color: rgb(19, 19, 129);
           }
           .icone:active {
             top: 4px;
-            text-shadow: 2px 2px 1px grey;
+            text-shadow: 2px 2px 1px $tertiary-color;
           }
           .like-count {
             display: block;
             position: relative;
             top: 5px;
             font-size: 1.2em;
-            color: #3cc50e;
+            color: $text-color;
             padding: 2px 8px 2px 8px;
-            border: 1px solid gold;
+            border: 1px solid $tertiary-color;
             border-radius: 20px;
-            box-shadow: 2px 2px 1px grey;
+            box-shadow: 2px 2px 1px $tertiary-color;
           }
         }
         .dislike {
@@ -304,35 +327,35 @@ export default {
           justify-content: space-around;
           align-items: center;
           .icone {
-            color: red;
+            color: $secondary-color;
             display: block;
             position: relative;
             margin-left: 30px;
             margin-right: 10px;
             cursor: pointer;
             font-size: 2em;
-            text-shadow: 2px 2px 5px grey;
+            text-shadow: 2px 2px 5px $tertiary-color;
           }
           .icone:hover {
             top: 2px;
-            text-shadow: 2px 2px 3px grey;
+            text-shadow: 2px 2px 3px $tertiary-color;
             color: #3cc50e;
           }
           .icone:active {
             top: 4px;
-            text-shadow: 2px 2px 1px grey;
+            text-shadow: 2px 2px 1px $tertiary-color;
           }
           .dislike-count {
             display: block;
             position: relative;
             top: 5px;
             font-size: 1.2em;
-            color: #3cc50e;
+            color: $text-color;
             margin-right: 50px;
             padding: 2px 8px 2px 8px;
-            border: 1px solid gold;
+            border: 1px solid $tertiary-color;
             border-radius: 20px;
-            box-shadow: 2px 2px 1px grey;
+            box-shadow: 2px 2px 1px $tertiary-color;
           }
         }
       }
@@ -349,11 +372,11 @@ export default {
           margin: 10px auto;
           padding: 5px 10px 8px 10px;
           text-decoration: none;
-          background-color: gold;
-          color: grey;
+          background-color: $tertiary-color;
+          color: $tertiary-color;
           font-size: 0.9em;
-          border: 1px solid greenyellow;
-          box-shadow: 0 10px 10px grey;
+          border: 1px solid $primary-color;
+          box-shadow: 0 10px 10px $tertiary-color;
           border-radius: 30px;
           @media screen and (min-width: 768px) {
             font-size: 1.5em;
@@ -365,11 +388,11 @@ export default {
         .modify:hover {
           top: 2px;
           color: red;
-          box-shadow: 0 8px 8px grey;
+          box-shadow: 0 8px 8px $tertiary-color;
         }
         .modify:active {
           top: 8px;
-          box-shadow: 0 2px 2px grey;
+          box-shadow: 0 2px 2px $tertiary-color;
         }
         .modal-overlay{
           background-color: #15151693;
@@ -401,11 +424,11 @@ export default {
           margin: 10px auto;
           padding: 5px 10px 8px 10px;
           text-decoration: none;
-          background-color: red;
-          color: grey;
+          background-color: $secondary-color;
+          color: $white-color;
           font-size: 0.9em;
-          border: 1px solid greenyellow;
-          box-shadow: 0 10px 10px grey;
+          border: 1px solid $secondary-color;
+          box-shadow: 0 10px 10px $tertiary-color;
           border-radius: 30px;
           @media screen and (min-width: 768px) {
             font-size: 1.5em;
@@ -417,18 +440,18 @@ export default {
         .deletePost:hover {
           top: 2px;
           cursor: pointer;
-          color: gold;
-          box-shadow: 0 8px 8px grey;
+          color: $white-color;
+          box-shadow: 0 8px 8px $primary-color;
         }
         .deletePost:active {
           top: 8px;
-          color: gold;
-          box-shadow: 0 2px 2px grey;
+          color: $tertiary-color;
+          box-shadow: 0 2px 2px $tertiary-color;
         }
       }
       .create_comment {
         width: 90%;
-        background-color: gold;
+        background-color: $tertiary-color;
         margin: 20px auto;
         display: flex;
         flex-direction: column;
@@ -438,7 +461,7 @@ export default {
         .title {
           margin: 5px auto;
           font-size: 1.2em;
-          color: grey;
+          color: $tertiary-color;
           @media screen and (min-width: 768px) {
             font-size: 1.5em;
           }
@@ -458,37 +481,37 @@ export default {
             margin: 10px auto;
             padding: 2px 15px 8px 15px;
             text-decoration: none;
-            background-color: green;
-            color: gold;
+            background-color: $primary-color;
+            color: $white-color;
             font-size: 1.2em;
             border-style: none;
-            box-shadow: 0 10px 10px darkgreen;
+            box-shadow: 0 10px 10px $secondary-color;
             border-radius: 30px;
             cursor: pointer;
           }
           .comment-btn:hover {
             top: 2px;
-            box-shadow: 0 8px 8px darkgreen;
+            box-shadow: 0 8px 8px $primary-color;
           }
           .comment-btn:active {
             top: 8px;
-            box-shadow: 0 2px 2px darkgreen;
+            box-shadow: 0 2px 2px $primary-color;
           }
         }
       }
       .display_comments {
         .commentaire {
-          background-color: gold;
+          background-color: $tertiary-color;
           padding: 20px;
           border-radius: 30px;
-          border: 1px solid green;
-          color: grey;
+          border: 1px solid $secondary-color;
+          color: $text-color;
           margin: 2px auto;
           .body {
             padding-right: 20px;
             padding-left: 20px;
             font-size: 1em;
-            border-bottom: 2px solid grey;
+            border-bottom: 2px solid $tertiary-color;
             border-radius: 0 0 30px 0;
           }
           .date {
@@ -496,15 +519,15 @@ export default {
           }
           a {
             text-decoration: none;
-            color: grey;
+            color: $tertiary-color;
             font-size: 1em;
             .icone {
-              color: red;
+              color: $secondary-color;
               margin-right: 10px;
             }
           }
           .modal-overlay{
-            background-color: #15151693;
+            background-color: $text-color;
             position: fixed;
             top: 0;
             right: 0;
@@ -521,7 +544,7 @@ export default {
               top: 40px;
               right: 30px;
               z-index: 110;
-              background-color: red;
+              background-color: $secondary-color;
               width: 40px;
               height: 40px;
             }

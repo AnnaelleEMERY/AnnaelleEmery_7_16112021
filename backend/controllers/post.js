@@ -69,18 +69,6 @@ exports.getPostsByCreatedAt = (req, res, next) => {
     })
 };
 
-// récupérer TOUS les posts triés par date de mise à jour
-exports.getPostsByUpdatedAt = (req, res, next) => {
-    Post.findAllByUpdatedAt((err, data) => {
-        if (err) {
-            res.status(500).send({
-                message: err.message || "des erreurs se sont produites",
-            });
-        }
-        res.send(data);
-    })
-};
-
 // Récupérer un post précis avec son id
 exports.getOnePost = (req, res, next) => {
     Post.findOne(req.params.id)

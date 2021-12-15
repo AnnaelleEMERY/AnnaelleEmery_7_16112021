@@ -18,9 +18,6 @@ router.get('/post/:id', auth, postCtrl.getOnePost);
 // Récupération des posts par date de création
 router.get('/posts/createdAt', auth, postCtrl.getPostsByCreatedAt);
 
-// Récupération des posts par date de mise à jour
-router.get('/posts/updatedAt', auth, postCtrl.getPostsByUpdatedAt);
-
 // Récupération de tous les posts d'un utilisateur
 router.get('/posts/user/:user_id', auth, postCtrl.getPostsOfOneUser);
 

@@ -17,7 +17,7 @@ import Navigation from "@/components/Navigation.vue";
 export default {
   name: "App",
   components: {
-  Navigation,
+    Navigation,
   },
 };
 </script>
@@ -34,6 +34,10 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+li {
+  list-style-type: none;
 }
 
 html {
@@ -56,7 +60,6 @@ textarea {
     outline: none;
   }
 }
-
 
 .home {
   padding: 2rem 2rem;
