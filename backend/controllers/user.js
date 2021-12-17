@@ -5,9 +5,9 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const User = require('../models/user');
 
-// Création d'un nouvel utilisateur OK
+// Création d'un nouvel utilisateur
 exports.register = (req, res) => {
-    bcrypt.hash(req.body.password, 5)
+    bcrypt.hash(req.body.password, 7)
         .then(hash => {
             const user = new User({
                 pseudo: req.body.pseudo,
@@ -32,12 +32,12 @@ exports.register = (req, res) => {
         .catch(error => res.status(500).json(error + ' Salut les gens'));
 };
 
-// Connection d'un utilisateur existant OK
+// Connection d'un utilisateur existant
 exports.login = (req, res) => {
     User.findOne(req.body.email, (err, data) => {
         //console.log(data);
         if (!data) {
-            console.log('user pas trouvé')
+            console.log('user non trouvé')
             return res.status(401).json({ error: 'utilisateur non trouvé' });
         }
         bcrypt.compare(req.body.password, data.password)
@@ -59,19 +59,19 @@ exports.login = (req, res) => {
                     )
                 })
             })
-            .catch(error => res.status(500).json(error, 'salut les gars'));
+            .catch(error => res.status(500).json(error, 'erreur login'));
     });
 };
 
-// Vérification de toke au login
+// Vérification du token au login
 exports.getMyDatas = (req, res) => {
     let token = req.headers.authorization.split(' ')[1];
     let decodedToken = jwt.verify(token, SECRET_KEY);
     let id = JSON.parse(decodedToken.id);
     User.findById(id)
-    .then(user => res.status(200)).json(user)
+    .then(user => res.status(200).json(user))
     .catch(error => res.status(404).json({ error }));
-};
+}
 
 
 // Déconnection de l'utilisateur
@@ -92,14 +92,14 @@ exports.updateUser = (req, res) => {
         .catch(error => res.status(404).json({ error }));
 }
 
-// Trouver Un utilisateur par son id OK
+// Trouver Un utilisateur par son id
 exports.getOneUserById = (req, res) => {
     User.findById(req.params.id)
         .then(user => res.status(200).json(user))
         .catch(error => res.status(404).json({ error }));
 };
 
-// Trouver tous les utilisateurs (rôle admin) OK
+// Trouver tous les utilisateurs (rôle admin)
 exports.getAllUsers = (req, res) => {
     User.findAll((err, data) => {
         if (err) {
@@ -114,7 +114,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 
-// Suppression d'un utilisateur (rôle admin) OK
+// Suppression d'un utilisateur (rôle admin)
 exports.deleteUser = (req, res) => {
     //let userId = req.params.userId;
     //console.log(userId);

@@ -89,7 +89,7 @@
 
 <script>
 //import { mapActions } from 'vuex'
-import axios from "axios";
+import axios from "axios"
 
 export default {
   name: "register",
@@ -100,39 +100,38 @@ export default {
         pseudo: "",
         nom: "",
         prenom: "",
+        etablissement: "",
         email: "",
         photo: "",
         password: "",
-        etablissement: "",
-        isAdmin: null,
-      },
-    };
+        isAdmin: 0
+      }
+    }
   },
   methods: {
     register() {
-      axios
-        .post("/auth/users", this.form)
-        .then((response) => {
+      axios.post('/auth/users/', this.form)
+        .then(response => {
           let data = response.data;
           console.log(data);
           this.data = alert(
             "l'utilisateur " + data.pseudo + " a bien été ajouté !"
           );
           this.$router.replace({
-            name: "Home",
-          });
+            name: "Home"
+          })
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.status(400)) {
             alert("Mot de passe trop simple");
           } else {
             this.data = alert("tu t'es trompé quelque part !");
             console.log(error);
           }
-        });
-    },
-  },
-};
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

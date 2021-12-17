@@ -49,7 +49,7 @@ User.deleteOne = (userId) => {
 };
 
 // Trouver un user par son id (RÔLE ADMIN)
-User.findOne = (userId) => {
+User.findById = (userId) => {
     return new Promise((resolve, reject) => {
         db.query(
             `SELECT * FROM groupomania.users WHERE id=${userId}`,
@@ -62,6 +62,19 @@ User.findOne = (userId) => {
             }
         )
     })
+};
+
+// Trouver un user (login)
+User.findOne = (email, result) => {
+    db.query(
+        "SELECT * FROM groupomania.users WHERE email=?",
+        email, (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, res[0]);
+    });
 };
 
 // Trouver TOUS les utilisateurs (ADMIN AUSSI)

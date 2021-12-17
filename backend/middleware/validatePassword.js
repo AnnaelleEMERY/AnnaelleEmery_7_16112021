@@ -9,7 +9,7 @@ passwordFormat
     .has().uppercase(1)                       // Doit avoir au moins une majuscule
     .has().lowercase()                        // Doit avoir au moins une minuscule
     .has().digits(1)                          // Doit avoir au moins un chiffre
-    .has().not().spaces()                     // Ne doit pas avoir d'espaces
+    .has().not().spaces()                     // Ne doit pas avoir d'espace
     .is().not().oneOf(['123456', '987654', 'password', 'Passw0rd', 'MotDePasse', 'Motdepasse', 'Motdepasse123']);
 
 module.exports = (req, res, next) => {

@@ -1,7 +1,7 @@
 const Post = require('../models/post');
 const mysql = require('mysql');
 
-// Créer et sauvgarder un post
+// Créer et sauvegarder un post
 exports.createPost = (req, res, next) => {
     if (!req.body) {
         res.status(400).send({
