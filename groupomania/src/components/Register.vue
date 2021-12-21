@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     register() {
-      axios.post('/auth/users/', this.form)
+      axios.post('auth/register', this.form)
         .then(response => {
           let data = response.data;
           console.log(data);
@@ -121,14 +121,10 @@ export default {
             name: "Home"
           })
         })
-        .catch(error => {
-          if (error.status(400)) {
-            alert("Mot de passe trop simple");
-          } else {
-            this.data = alert("tu t'es trompé quelque part !");
-            console.log(error);
-          }
-        })
+        .catch((error) => {
+          this.data = alert("Utilisateur non créé !");
+          console.log("non créé" + error);
+        });
     }
   }
 }

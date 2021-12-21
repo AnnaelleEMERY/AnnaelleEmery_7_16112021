@@ -6,7 +6,7 @@ const validatePassword = require('../middleware/validatePassword');
 const userCtrl = require('../controllers/user');
 
 router.post('/register', validatePassword, userCtrl.register);
-router.post('/login', userCtrl.login);
+router.get('/login', userCtrl.login);
 
 // Connection de l'utilisateur en cours de login pour vérifier la validité du token et récupérer ses données
 router.get('/me', auth, userCtrl.getMyDatas);

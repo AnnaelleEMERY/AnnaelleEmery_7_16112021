@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Login",
@@ -43,15 +43,23 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-      login: "auth/login",
-    }),
     submit() {
-      this.login(this.form).then(() => {
-        this.$router.replace({
-          name: "Profile",
+      axios
+        .get("auth/login", this.form)
+        .then((response) => {
+          let data = response.data;
+          console.log(data);
+          this.data = alert(
+            "l'utilisateur " + data.pseudo + " a bien été trouvé !"
+          );
+          this.$router.replace({
+            name: "Profile",
+          });
+        })
+        .catch((error) => {
+          this.data = alert("Utilisateur non trouvé !");
+          console.log({ error });
         });
-      });
     },
   },
 };
