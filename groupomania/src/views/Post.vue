@@ -113,7 +113,7 @@ export default {
         })
         .catch(error => {
           this.data = alert("erreur, rien a afficher !");
-          console.log('pas bien' + error);
+          console.log('pas bien ' + error);
         })
     },
     async postComment() {

@@ -44,9 +44,8 @@ export default {
   },
   methods: {
     submit() {
-      axios
-        .get("auth/login", this.form)
-        .then((response) => {
+      axios.get("auth/login", this.form)
+        .then(response => {
           let data = response.data;
           console.log(data);
           this.data = alert(
@@ -57,7 +56,7 @@ export default {
           });
         })
         .catch((error) => {
-          this.data = alert("Utilisateur non trouvé !");
+          this.data = alert("Utilisateur non trouvé ou un autre problème est survenu !");
           console.log({ error });
         });
     },
