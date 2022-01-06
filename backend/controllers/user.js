@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY = process.env.SEC_SES;
 
 const User = require('../models/user');
 
@@ -35,14 +35,19 @@ exports.register = (req, res) => {
 // Connection d'un utilisateur existant
 exports.login = (req, res) => {
     User.findOne(req.body.email, (err, data) => {
-        //console.log(data);
+        console.log("req.body.password : ");
+        console.log(req.body.password);
+        console.log("data.password : ");
+        console.log(data.password);
         if (!data) {
+
             console.log('user non trouvé')
             return res.status(401).json({ error: 'utilisateur non trouvé' });
         }
         bcrypt.compare(req.body.password, data.password)
             .then(isValid => {
                 if (!isValid) {
+                    console.log('mot de passe incorrect')
                     return res.status(401).json({ error: 'mot de passe incorrect' });
                 };
                 const payload = {
@@ -59,7 +64,7 @@ exports.login = (req, res) => {
                     )
                 })
             })
-            .catch(error => res.status(500).json(error, 'erreur login'));
+            .catch(error => res.status(500).json(error, 'erreur à la connexion'));
     });
 };
 
@@ -69,8 +74,8 @@ exports.getMyDatas = (req, res) => {
     let decodedToken = jwt.verify(token, SECRET_KEY);
     let id = JSON.parse(decodedToken.id);
     User.findById(id)
-    .then(user => res.status(200).json(user))
-    .catch(error => res.status(404).json({ error }));
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(404).json({ error }));
 }
 
 

@@ -9,7 +9,7 @@
             v-model="form.email"
             type="text"
             class="email"
-            placeholder="toto@titi.fr"
+            placeholder="Votre email"
           />
         </div>
         <div class="box">
@@ -18,7 +18,7 @@
             v-model="form.password"
             type="password"
             class="password"
-            placeholder="..."
+            placeholder="Votre mot de passe"
           />
         </div>
       </form>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default {
   name: "Login",
@@ -38,22 +38,22 @@ export default {
     return {
       form: {
         email: "",
-        password: "",
-      },
-    };
+        password: ""
+      }
+    }
   },
   methods: {
     submit() {
-      axios.get("auth/login", this.form)
+      axios.post("auth/login", this.form)
         .then(response => {
           let data = response.data;
           console.log(data);
           this.data = alert(
-            "l'utilisateur " + data.pseudo + " a bien été trouvé !"
+            "l'utilisateur a bien été trouvé !"
           );
           this.$router.replace({
-            name: "Profile",
-          });
+            name: "Profile"
+          })
         })
         .catch((error) => {
           this.data = alert("Utilisateur non trouvé ou un autre problème est survenu !");
